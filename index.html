@@ -21,12 +21,15 @@ body{
   background:#050817;
   overflow-x:hidden;
 }
+
 .space{
-  position:fixed;inset:0;z-index:-3;
+  position:fixed;
+  inset:0;
+  z-index:-3;
   background:
-  radial-gradient(ellipse at 75% 35%,#382b65 0%,transparent 35%),
-  radial-gradient(ellipse at 15% 80%,#142e5c 0%,transparent 40%),
-  #050817;
+    linear-gradient(rgba(5,8,23,.35),rgba(5,8,23,.72)),
+    url("https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?auto=format&fit=crop&w=2000&q=90")
+    center center / cover no-repeat;
 }
 .stars,.stars:before,.stars:after{
   position:fixed;inset:0;content:"";
