@@ -4,107 +4,75 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NEXUS BROWSER</title>
+<title>NEXUS | Space Browser</title>
 <style>
 *{box-sizing:border-box}
 body{
- margin:0;min-height:100vh;color:white;
- font-family:Arial,sans-serif;
- background:radial-gradient(circle at top,#263b68,#080d19 65%);
- display:flex;align-items:center;justify-content:center;
- padding:25px
+ margin:0;min-height:100vh;color:white;font-family:Arial,sans-serif;
+ background:
+ linear-gradient(90deg,rgba(4,8,22,.88),rgba(4,8,22,.35)),
+ url("https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?auto=format&fit=crop&w=2200&q=90")
+ center/cover fixed;
 }
-main{width:min(900px,100%);text-align:center}
-h1{font-size:clamp(42px,8vw,76px);letter-spacing:9px;margin:0}
-.sub{color:#aab8d2;letter-spacing:4px;margin:10px 0 35px}
-.search{display:flex;gap:10px;margin:20px auto;max-width:700px}
-input,select,button{
- padding:15px;border:1px solid #354565;border-radius:12px;
- background:#121d32;color:white;font-size:15px
-}
+header{padding:25px 6%;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:26px;font-weight:bold;letter-spacing:7px}
+.status{color:#b7c9ff;font-size:12px;letter-spacing:3px}
+main{max-width:1000px;margin:10vh auto;padding:25px;text-align:center}
+h1{font-size:clamp(45px,8vw,85px);letter-spacing:12px;margin:0;text-shadow:0 0 35px #8a9fff}
+.subtitle{color:#c5cbe4;letter-spacing:5px;margin:15px 0 45px}
+.search{display:flex;max-width:700px;margin:auto;gap:10px}
+input,select,button{border:1px solid #7584ad;background:#111a30dd;color:white;padding:15px;border-radius:12px;font-size:15px}
 input{flex:1;min-width:0}
-button{cursor:pointer;background:#426cf5;border:0}
-button:hover{filter:brightness(1.15)}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:30px}
-.card{padding:25px;background:#14213a;border:1px solid #344769;border-radius:17px;text-decoration:none;color:white;transition:.2s}
-.card:hover{transform:translateY(-4px);border-color:#7896ff}
-.card strong{display:block;font-size:18px;margin-bottom:8px}
-.card span{font-size:13px;color:#aab8d2}
-.settings{margin-top:35px;padding:20px;background:#101a2d;border-radius:16px}
-.settings input{max-width:180px}
-#custom{margin-top:15px}
+button{cursor:pointer;background:#536cbb}
+button:hover{background:#718ee8}
+h2{font-size:14px;letter-spacing:5px;margin-top:55px;color:#c5d4ff}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px;margin-top:22px}
+.card{
+ display:block;padding:25px 15px;border-radius:18px;
+ background:#111a30a8;border:1px solid #7183ad66;
+ backdrop-filter:blur(12px);text-decoration:none;color:white;
+ transition:.25s
+}
+.card:hover{transform:translateY(-6px);background:#26385dcc;border-color:#a6b9ff}
+.card strong{display:block;font-size:17px;margin-bottom:10px}
+.card span{font-size:12px;color:#b7c6e9}
+footer{padding:35px;text-align:center;color:#9caaca;font-size:11px;letter-spacing:3px}
+@media(max-width:550px){header{padding:18px}main{margin:7vh auto}.search{flex-wrap:wrap}.search input{min-width:100%}}
 </style>
 </head>
 <body>
+<header>
+ <div class="logo">NEXUS</div>
+ <div class="status">● SYSTEM ONLINE</div>
+</header>
 <main>
-<h1>NEXUS</h1>
-<div class="sub">YOUR DIGITAL UNIVERSE</div>
+ <h1>NEXUS</h1>
+ <div class="subtitle">EXPLORE BEYOND LIMITS</div>
 
-<form class="search" id="searchForm">
-<select id="engine">
-<option value="https://www.google.com/search?q=">Google</option>
-<option value="https://www.bing.com/search?q=">Bing</option>
-<option value="https://duckduckgo.com/?q=">DuckDuckGo</option>
-</select>
-<input id="query" placeholder="Search the web or enter a URL..." required>
-<button>GO</button>
-</form>
+ <form class="search" id="searchForm">
+  <select id="engine">
+   <option value="https://www.google.com/search?q=">Google</option>
+   <option value="https://www.bing.com/search?q=">Bing</option>
+   <option value="https://duckduckgo.com/?q=">DuckDuckGo</option>
+  </select>
+  <input id="query" placeholder="Search the universe..." required>
+  <button>SEARCH</button>
+ </form>
 
-<h2>YOUR LAUNCHPAD</h2>
-<div class="grid">
-<a class="card" href="https://play.geforcenow.com/" target="_blank" rel="noopener"><strong>🎮 GeForce NOW</strong><span>Cloud gaming</span></a>
-<a class="card" href="https://www.crazygames.com/" target="_blank" rel="noopener"><strong>🕹️ CrazyGames</strong><span>Browser games</span></a>
-<a class="card" href="https://www.xbox.com/play" target="_blank" rel="noopener"><strong>🎯 Xbox Cloud</strong><span>Cloud gaming</span></a>
-<a class="card" href="https://www.youtube.com/" target="_blank" rel="noopener"><strong>▶ YouTube</strong><span>Watch videos</span></a>
-</div>
-
-<div class="settings">
-<h3>⚙ CUSTOMIZE NEXUS</h3>
-<p>Change your dashboard accent color</p>
-<input type="color" id="accent" value="#426cf5">
-<p>Add your own shortcut</p>
-<input id="shortcutName" placeholder="Website name">
-<input id="shortcutUrl" placeholder="https://example.com">
-<button type="button" id="add">ADD SHORTCUT</button>
-<div class="grid" id="custom"></div>
-</div>
-<p style="color:#7384a5;font-size:12px;margin-top:25px">NEXUS BROWSER • YOUR SPACE ON THE WEB</p>
+ <h2>MISSION CONTROL</h2>
+ <div class="grid">
+  <a class="card" href="https://play.geforcenow.com/" target="_blank" rel="noopener"><strong>🎮 GEFORCE NOW</strong><span>Cloud gaming</span></a>
+  <a class="card" href="https://www.crazygames.com/" target="_blank" rel="noopener"><strong>🕹️ ARCADE</strong><span>Browser games</span></a>
+  <a class="card" href="https://www.youtube.com/" target="_blank" rel="noopener"><strong>▶ MEDIA</strong><span>Video streaming</span></a>
+  <a class="card" href="https://www.wikipedia.org/" target="_blank" rel="noopener"><strong>🌌 EXPLORE</strong><span>Discover knowledge</span></a>
+ </div>
 </main>
+<footer>NEXUS SPACE INTERFACE • SATURN EDITION</footer>
 <script>
-document.getElementById("searchForm").addEventListener("submit",function(e){
+document.getElementById("searchForm").addEventListener("submit",e=>{
  e.preventDefault();
- let q=document.getElementById("query").value.trim();
- if(!q)return;
- let url=/^https?:\/\//i.test(q)?q:
- "https://www.google.com/search?q="+encodeURIComponent(q);
- if(/^https?:\/\//i.test(q) && !q.includes(".")){
- url="https://www.google.com/search?q="+encodeURIComponent(q);
- }
- if(!/^https?:\/\//i.test(q)){
- url=document.getElementById("engine").value+encodeURIComponent(q);
- }
- window.open(url,"_blank","noopener");
-});
-document.getElementById("accent").addEventListener("input",e=>{
- document.querySelectorAll("button").forEach(b=>b.style.background=e.target.value);
- localStorage.setItem("nexusAccent",e.target.value);
-});
-let saved=localStorage.getItem("nexusAccent");
-if(saved)document.getElementById("accent").value=saved;
-document.getElementById("add").addEventListener("click",()=>{
- let name=document.getElementById("shortcutName").value.trim();
- let url=document.getElementById("shortcutUrl").value.trim();
- if(!name||!/^https?:\/\//i.test(url)){
- alert("Enter a name and a full URL starting with https://");
- return;
- }
- let a=document.createElement("a");
- a.className="card";a.href=url;a.target="_blank";a.rel="noopener";
- let strong=document.createElement("strong");strong.textContent="🌐 "+name;
- let span=document.createElement("span");span.textContent=url;
- a.append(strong,span);document.getElementById("custom").append(a);
- document.getElementById("shortcutName").value="";
- document.getElementById("shortcutUrl").value="";
+ const q=document.getElementById("query").value.trim();
+ if(q)window.open(document.getElementById("engine").value+encodeURIComponent(q),"_blank","noopener");
 });
 </script>
 </body>
