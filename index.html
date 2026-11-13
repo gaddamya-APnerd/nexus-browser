@@ -3,315 +3,189 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NEXUS Browser 2.0</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080b1b">
+<title>NEXUS PROXY</title>
 <style>
-:root {
-  --accent:#8b9cff;
-  --panel:rgba(15,23,49,.82);
-  --text:#f4f5ff;
-  --muted:#aab5d4;
-}
+:root{--accent:#829aff;--panel:rgba(13,20,43,.86)}
 *{box-sizing:border-box}
-body{
-  margin:0;
-  min-height:100vh;
-  color:var(--text);
-  font-family:Inter,Arial,sans-serif;
-  background:#050817;
-  overflow-x:hidden;
-}
-
-.space{
-  position:fixed;
-  inset:0;
-  z-index:-3;
-  background:
-    linear-gradient(rgba(5,8,23,.35),rgba(5,8,23,.72)),
-    url("https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?auto=format&fit=crop&w=2000&q=90")
-    center center / cover no-repeat;
-}
-.stars,.stars:before,.stars:after{
-  position:fixed;inset:0;content:"";
-  background-image:
-  radial-gradient(2px 2px at 20% 30%,white,transparent),
-  radial-gradient(1px 1px at 70% 60%,white,transparent),
-  radial-gradient(2px 2px at 85% 20%,white,transparent),
-  radial-gradient(1px 1px at 40% 80%,white,transparent);
-  background-size:230px 230px;
-  animation:drift 55s linear infinite;
-  z-index:-2;
-}
-.stars:before{transform:translateY(100%);opacity:.6}
-.stars:after{background-size:370px 370px;opacity:.4;animation-duration:85s}
-@keyframes drift{to{transform:translateY(-100%)}}
-header{
-  height:76px;padding:0 5%;
-  display:flex;align-items:center;justify-content:space-between;
-  background:rgba(5,8,23,.75);
-  border-bottom:1px solid #ffffff18;
-  backdrop-filter:blur(18px);
-}
-.logo{font-size:25px;font-weight:900;letter-spacing:6px}
+body{margin:0;background:#070a18;color:#fff;font-family:Arial,sans-serif}
+#stars{position:fixed;inset:0;z-index:-1;pointer-events:none;
+background:radial-gradient(2px 2px at 20% 30%,#fff,transparent),
+radial-gradient(1px 1px at 70% 60%,#fff,transparent),
+radial-gradient(2px 2px at 90% 20%,#fff,transparent);
+background-size:180px 180px;animation:stars 45s linear infinite}
+@keyframes stars{to{background-position:0 180px}}
+.background{position:fixed;inset:0;z-index:-2;
+background:linear-gradient(#070a1860,#070a18c9),
+url("https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?auto=format&fit=crop&w=2000&q=90") center/cover}
+header{height:70px;padding:0 5%;display:flex;align-items:center;
+justify-content:space-between;background:#080d20d9;
+border-bottom:1px solid #ffffff20;backdrop-filter:blur(15px)}
+.logo{font-size:24px;font-weight:900;letter-spacing:5px}
 .logo span{color:var(--accent)}
-.online{font-size:12px;color:#7fffc2;letter-spacing:2px}
-main{max-width:1120px;margin:auto;padding:38px 22px 70px}
-.hero{text-align:center;padding:20px 0 32px}
-.eyebrow{color:var(--accent);letter-spacing:5px;font-size:11px}
-h1{font-size:clamp(36px,7vw,65px);letter-spacing:8px;margin:13px 0}
-.subtitle{color:var(--muted);letter-spacing:3px;font-size:12px}
-.search{
-  max-width:780px;margin:28px auto 0;
-  display:flex;gap:9px;padding:9px;
-  background:var(--panel);border:1px solid #ffffff25;
-  border-radius:15px;backdrop-filter:blur(18px);
-  box-shadow:0 15px 60px #0006;
-}
-input,select{
-  background:#090f25;color:white;border:1px solid #ffffff20;
-  border-radius:9px;padding:13px;font-size:14px;min-width:0;
-}
-.search input{flex:1}
-button{
-  cursor:pointer;color:white;background:#27365e;
-  border:1px solid #ffffff24;border-radius:9px;
-  padding:11px 15px;transition:.2s;
-}
-button:hover{background:var(--accent);color:#080b19}
-.section-title{
-  display:flex;justify-content:space-between;align-items:center;
-  margin:35px 0 14px;font-size:13px;letter-spacing:3px;
-}
-.section-title small{color:var(--muted);letter-spacing:1px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:13px}
-.card{
-  padding:19px;background:var(--panel);
-  border:1px solid #ffffff1c;border-radius:14px;
-  backdrop-filter:blur(15px);transition:.25s;
-}
-.card:hover{transform:translateY(-4px);border-color:var(--accent)}
-.card a{color:white;text-decoration:none;display:block}
-.card .symbol{font-size:25px;margin-bottom:12px}
-.card strong{display:block;font-size:14px}
-.card p{font-size:12px;color:var(--muted);margin-bottom:0}
-.panel{
-  background:var(--panel);border:1px solid #ffffff20;
-  border-radius:15px;padding:20px;backdrop-filter:blur(15px);
-}
-#results{min-height:160px;line-height:1.8;color:#e1e7ff}
-#results h2{color:var(--accent)}
-#results .result-text{white-space:normal;overflow-wrap:anywhere}
-#results .hint{color:var(--muted)}
-.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}
-.bookmark{display:inline-flex;gap:8px;align-items:center;margin:5px}
-#settings{display:none;margin-top:20px}
-#settings.open{display:block}
-#settings label{display:block;color:var(--muted);margin:14px 0 7px}
-footer{text-align:center;color:#7f8aaa;font-size:11px;padding:35px}
-@media(max-width:600px){
- header{padding:0 18px}
- .search{flex-wrap:wrap}
- .search input{width:100%;flex-basis:100%}
- h1{letter-spacing:4px}
+.online{color:#73edbb;font-size:11px;letter-spacing:2px}
+main{max-width:1250px;margin:auto;padding:30px 20px 60px}
+.hero{text-align:center;padding:25px 0 35px}
+.hero small{color:var(--accent);letter-spacing:5px}
+h1{font-size:clamp(38px,7vw,70px);letter-spacing:8px;margin:15px 0}
+.hero p{color:#c3cce7;letter-spacing:3px;font-size:12px}
+.browser,.panel{background:var(--panel);border:1px solid #ffffff25;
+border-radius:15px;padding:15px;backdrop-filter:blur(18px);
+box-shadow:0 15px 50px #0005}
+.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+button,input,select{font:inherit;border-radius:8px}
+button{background:#26365d;color:white;border:1px solid #ffffff25;
+padding:11px 15px;cursor:pointer}
+button:hover{background:var(--accent);color:#080b18}
+input,select{background:#090f24;color:white;border:1px solid #53658b;
+padding:12px}
+#url{flex:1;min-width:180px}
+#browserFrame{width:100%;height:570px;border:0;border-radius:9px;
+background:white;margin-top:13px}
+.notice{font-size:12px;color:#b4bfdc;line-height:1.6}
+.heading{margin:30px 0 13px;font-size:13px;letter-spacing:3px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:13px}
+.card{padding:18px;border-radius:13px;background:var(--panel);
+border:1px solid #ffffff24}
+.card a{color:white;text-decoration:none}
+.card strong{display:block;margin-top:9px}
+.card p{color:#abb8d7;font-size:12px}
+.card:hover{border-color:var(--accent)}
+.bookmark{display:inline-flex;gap:5px;margin:5px}
+#settings{display:none;margin-top:15px}
+#settings.show{display:block}
+#settings label{display:block;margin:12px 0 7px;color:#bac5e1}
+footer{text-align:center;color:#8b98b7;font-size:11px;padding:25px}
+@media(max-width:650px){
+header{padding:0 15px}
+#browserFrame{height:440px}
+.toolbar button{padding:10px}
+h1{letter-spacing:4px}
 }
 </style>
 </head>
 <body>
-<div class="space"></div><div class="stars"></div>
-
+<div class="background"></div><div id="stars"></div>
 <header>
  <div class="logo">NEXUS<span>.</span></div>
- <div class="online">● SYSTEM ONLINE</div>
+ <div class="online">● ONLINE</div>
 </header>
-
 <main>
  <section class="hero">
-  <div class="eyebrow">WELCOME TO YOUR UNIVERSE</div>
-  <h1>NEXUS</h1>
-  <div class="subtitle">EXPLORE BEYOND LIMITS</div>
-
-  <div class="search">
-   <input id="address" placeholder="Enter an approved website or search the web..." />
-   <button onclick="browse()">EXPLORE ↗</button>
-   <button onclick="searchWeb()">SEARCH</button>
-  </div>
+  <small>YOUR DIGITAL UNIVERSE</small>
+  <h1>NEXUS PROXY</h1>
+  <p>EXPLORE BEYOND LIMITS</p>
  </section>
 
- <div class="section-title">
-  <span>MISSION CONTROL</span>
-  <small>YOUR QUICK ACCESS</small>
- </div>
+ <section class="browser">
+  <div class="toolbar">
+   <button onclick="back()">←</button>
+   <button onclick="forward()">→</button>
+   <button onclick="refresh()">↻</button>
+   <input id="url" placeholder="Enter website address or search...">
+   <button onclick="navigate()">GO ↗</button>
+  </div>
+  <iframe id="browserFrame" title="NEXUS browsing area"
+   srcdoc="<body style='background:#101a32;color:white;font-family:Arial;text-align:center;padding:70px 15px'><h1>Welcome to NEXUS</h1><p>Enter a website address above.</p><p>Some websites block embedded browsing.</p></body>"></iframe>
+  <p class="notice">Websites that permit embedding can open here. If a site blocks embedding, use the Open in new tab button.</p>
+  <button onclick="openExternal()">Open in new tab ↗</button>
+  <button onclick="saveBookmark()">☆ Bookmark</button>
+ </section>
 
+ <div class="heading">QUICK ACCESS</div>
  <section class="grid">
-  <div class="card"><a href="https://www.nasa.gov" target="_blank">
-   <div class="symbol">🚀</div><strong>NASA</strong>
-   <p>Space and exploration</p></a></div>
-  <div class="card"><a href="https://www.wikipedia.org" target="_blank">
-   <div class="symbol">🌐</div><strong>Wikipedia</strong>
-   <p>Knowledge and discovery</p></a></div>
-  <div class="card"><a href="https://www.britannica.com" target="_blank">
-   <div class="symbol">📚</div><strong>Britannica</strong>
-   <p>Learn something new</p></a></div>
-  <div class="card"><a href="https://www.gutenberg.org" target="_blank">
-   <div class="symbol">📖</div><strong>Project Gutenberg</strong>
-   <p>Explore free books</p></a></div>
+  <div class="card"><a href="https://www.nasa.gov" target="_blank" rel="noopener"><div>🚀</div><strong>NASA</strong><p>Space exploration</p></a></div>
+  <div class="card"><a href="https://www.wikipedia.org" target="_blank" rel="noopener"><div>🌐</div><strong>Wikipedia</strong><p>Knowledge library</p></a></div>
+  <div class="card"><a href="https://play.geforcenow.com" target="_blank" rel="noopener"><div>🎮</div><strong>GeForce NOW</strong><p>Cloud gaming</p></a></div>
+  <div class="card"><a href="https://www.crazygames.com" target="_blank" rel="noopener"><div>🕹️</div><strong>CrazyGames</strong><p>Online games</p></a></div>
+  <div class="card"><a href="https://www.youtube.com" target="_blank" rel="noopener"><div>▶️</div><strong>YouTube</strong><p>Videos</p></a></div>
+  <div class="card"><a href="https://www.gutenberg.org" target="_blank" rel="noopener"><div>📚</div><strong>Gutenberg</strong><p>Free books</p></a></div>
  </section>
 
- <div class="section-title">
-  <span>YOUR BOOKMARKS</span>
-  <small>SAVED ON THIS DEVICE</small>
- </div>
- <section class="panel">
-  <div id="bookmarks">No bookmarks yet.</div>
- </section>
+ <div class="heading">YOUR BOOKMARKS</div>
+ <section class="panel" id="bookmarks">No bookmarks saved.</section>
 
- <div class="section-title">
-  <span>NEXUS READER</span>
-  <small>APPROVED PUBLIC WEBSITES</small>
- </div>
+ <div class="heading">PERSONALIZATION</div>
  <section class="panel">
-  <div id="results">
-   <h2>Ready for exploration.</h2>
-   <p class="hint">Enter an approved website above to read its available page content here.</p>
-  </div>
-  <div class="actions">
-   <button onclick="saveBookmark()">☆ Save bookmark</button>
-   <button onclick="clearReader()">Clear reader</button>
-  </div>
- </section>
-
- <div class="section-title">
-  <span>PERSONALIZATION</span>
-  <small>MAKE IT YOURS</small>
- </div>
- <section class="panel">
-  <button onclick="toggleSettings()">⚙ OPEN SETTINGS</button>
+  <button onclick="document.getElementById('settings').classList.toggle('show')">⚙ Settings</button>
   <div id="settings">
-   <label for="accent">Accent color</label>
-   <select id="accent" onchange="changeAccent(this.value)">
-    <option value="#8b9cff">Saturn Blue</option>
+   <label>Accent color</label>
+   <select id="accent" onchange="setAccent(this.value)">
+    <option value="#829aff">Saturn Blue</option>
     <option value="#bd8bff">Cosmic Purple</option>
-    <option value="#55e6d1">Nebula Teal</option>
+    <option value="#54dfd0">Nebula Teal</option>
     <option value="#ffb36b">Solar Gold</option>
     <option value="#ff82b2">Galaxy Pink</option>
    </select>
-   <label>Background style</label>
-   <button onclick="changeBackground()">Change space colors</button>
-   <button onclick="resetSettings()">Reset settings</button>
+   <p><button onclick="resetTheme()">Reset theme</button></p>
   </div>
  </section>
 </main>
-
-<footer>NEXUS BROWSER 2.0 · EXPLORE YOUR UNIVERSE</footer>
-
+<footer>NEXUS PROXY · VERSION 3.0</footer>
 <script>
-const address=document.getElementById("address");
-const results=document.getElementById("results");
-let savedURL="";
-
-async function browse(){
- let value=address.value.trim();
- if(!value)return;
-
- let url=value.startsWith("https://")?value:"https://"+value;
- try{
-  const parsed=new URL(url);
-  if(parsed.protocol!=="https:")throw Error("HTTPS websites only.");
-  savedURL=parsed.href;
- }catch(e){
-  results.textContent="Please enter a valid HTTPS website address.";
-  return;
- }
-
- results.textContent="Connecting to NEXUS reader...";
- try{
-  const response=await fetch("/api/browse?url="+encodeURIComponent(savedURL));
-  const data=await response.json();
-  if(!response.ok)throw Error(data.error||"Unable to load this page.");
-
-  results.replaceChildren();
-  const heading=document.createElement("h2");
-  heading.textContent=data.title;
-  const paragraph=document.createElement("p");
-  paragraph.className="result-text";
-  paragraph.textContent=data.content;
-  results.append(heading,paragraph);
- }catch(error){
-  results.textContent=error.message;
- }
+const urlInput=document.getElementById("url");
+const frame=document.getElementById("browserFrame");
+let currentURL="";
+function makeURL(value){
+ value=value.trim();
+ if(!value)return "";
+ if(!value.includes(".")||value.includes(" "))
+ return "https://www.google.com/search?q="+encodeURIComponent(value);
+ if(!/^https?:\/\//i.test(value))value="https://"+value;
+ const parsed=new URL(value);
+ if(!["https:","http:"].includes(parsed.protocol))throw Error("Unsupported address");
+ return parsed.href;
 }
-
-function searchWeb(){
- let value=address.value.trim();
- if(!value)return;
- window.open("https://www.google.com/search?q="+encodeURIComponent(value),"_blank","noopener");
+function navigate(){
+ try{
+  currentURL=makeURL(urlInput.value);
+  if(!currentURL)return;
+  frame.src=currentURL;
+ }catch(e){alert("Please enter a valid web address.")}
 }
-
-address.addEventListener("keydown",e=>{
- if(e.key==="Enter")browse();
-});
-
+urlInput.addEventListener("keydown",e=>{if(e.key==="Enter")navigate()});
+function openExternal(){
+ if(currentURL)window.open(currentURL,"_blank","noopener");
+}
+function back(){try{frame.contentWindow.history.back()}catch(e){}}
+function forward(){try{frame.contentWindow.history.forward()}catch(e){}}
+function refresh(){try{frame.contentWindow.location.reload()}catch(e){}}
 function getBookmarks(){
  try{return JSON.parse(localStorage.getItem("nexusBookmarks")||"[]")}
  catch(e){return []}
 }
 function saveBookmark(){
- if(!savedURL){alert("Read an approved website first.");return;}
- let bookmarks=getBookmarks();
- if(!bookmarks.includes(savedURL))bookmarks.push(savedURL);
- localStorage.setItem("nexusBookmarks",JSON.stringify(bookmarks));
+ if(!currentURL){alert("Open a website first.");return}
+ const list=getBookmarks();
+ if(!list.includes(currentURL))list.push(currentURL);
+ localStorage.setItem("nexusBookmarks",JSON.stringify(list));
  showBookmarks();
 }
 function showBookmarks(){
  const area=document.getElementById("bookmarks");
  area.replaceChildren();
- const items=getBookmarks();
- if(!items.length){area.textContent="No bookmarks yet.";return;}
- items.forEach(url=>{
-  const row=document.createElement("div");
-  row.className="bookmark";
-  const link=document.createElement("button");
-  link.textContent=new URL(url).hostname;
-  link.onclick=()=>{address.value=url;browse()};
-  const remove=document.createElement("button");
-  remove.textContent="×";
-  remove.onclick=()=>{
-   localStorage.setItem("nexusBookmarks",
-    JSON.stringify(getBookmarks().filter(item=>item!==url)));
-   showBookmarks();
-  };
-  row.append(link,remove);
-  area.append(row);
+ const list=getBookmarks();
+ if(!list.length){area.textContent="No bookmarks saved.";return}
+ list.forEach(item=>{
+  const b=document.createElement("button");
+  b.className="bookmark";
+  b.textContent=new URL(item).hostname;
+  b.onclick=()=>{urlInput.value=item;navigate()};
+  area.append(b);
  });
 }
-function clearReader(){
- results.innerHTML="<h2>Reader cleared.</h2><p class='hint'>Enter another approved website to explore.</p>";
+function setAccent(color){
+ document.documentElement.style.setProperty("--accent",color);
+ localStorage.setItem("nexusAccent",color);
 }
-function toggleSettings(){
- document.getElementById("settings").classList.toggle("open");
-}
-function changeAccent(value){
- document.documentElement.style.setProperty("--accent",value);
- localStorage.setItem("nexusAccent",value);
-}
-function changeBackground(){
- document.body.classList.toggle("alternate");
- document.querySelector(".space").style.background=
- document.body.classList.contains("alternate")
- ?"radial-gradient(ellipse at 70% 40%,#51315e,transparent 40%),#090719"
- :"radial-gradient(ellipse at 75% 35%,#382b65,transparent 35%),radial-gradient(ellipse at 15% 80%,#142e5c,transparent 40%),#050817";
- localStorage.setItem("nexusBackground",document.body.classList.contains("alternate")?"alternate":"default");
-}
-function resetSettings(){
+function resetTheme(){
  localStorage.removeItem("nexusAccent");
- localStorage.removeItem("nexusBackground");
- changeAccent("#8b9cff");
- document.body.classList.remove("alternate");
- document.querySelector(".space").style.background=
- "radial-gradient(ellipse at 75% 35%,#382b65 0%,transparent 35%),radial-gradient(ellipse at 15% 80%,#142e5c 0%,transparent 40%),#050817";
+ setAccent("#829aff");
+ document.getElementById("accent").value="#829aff";
 }
-changeAccent(localStorage.getItem("nexusAccent")||"#8b9cff");
-if(localStorage.getItem("nexusBackground")==="alternate")changeBackground();
+setAccent(localStorage.getItem("nexusAccent")||"#829aff");
+document.getElementById("accent").value=localStorage.getItem("nexusAccent")||"#829aff";
 showBookmarks();
 </script>
 </body>
