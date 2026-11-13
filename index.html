@@ -60,25 +60,73 @@ input{flex:1;min-width:160px;padding:13px;border-radius:8px;border:1px solid #64
   <a href="https://www.wikipedia.org" target="_blank">Wikipedia ↗</a>
  </div>
 </main>
+
 <script>
-const frame=document.getElementById('view');
-const address=document.getElementById('address');
-function go(){
- let value=address.value.trim();
- if(!value)return;
- let url;
- if(/^https?:\/\//i.test(value))url=value;
- else if(value.includes('.')&&!value.includes(' '))url='https://'+value;
- else url='https://www.google.com/search?q='+encodeURIComponent(value);
- try{
-  const parsed=new URL(url);
-  if(parsed.protocol!=='https:'&&parsed.protocol!=='http:')return;
-  frame.src=parsed.href;
- }catch(e){alert('Please enter a valid website or search.')}
+const frame = document.getElementById("view");
+const address = document.getElementById("address");
+
+async function go() {
+  let value = address.value.trim();
+  if (!value) return;
+
+  let url = value.startsWith("https://")
+    ? value
+    : "https://" + value;
+
+  frame.srcdoc = `
+    <body style="background:#101a32;color:white;
+    font-family:Arial;padding:30px">
+    <h2>Connecting to NEXUS...</h2>
+    <p>Loading approved public page.</p>
+    </body>`;
+
+  try {
+    const response = await fetch(
+      "/api/browse?url=" + encodeURIComponent(url)
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) throw new Error(data.error);
+
+    frame.srcdoc = `
+      <body style="background:#101a32;color:white;
+      font-family:Arial;padding:30px;line-height:1.7">
+      <h1>${escapeHTML(data.title)}</h1>
+      <hr>
+      <p style="white-space:normal">${escapeHTML(data.content)}</p>
+      </body>`;
+  } catch (error) {
+    frame.srcdoc = `
+      <body style="background:#101a32;color:white;
+      font-family:Arial;padding:30px">
+      <h2>Unable to load page</h2>
+      <p>${escapeHTML(error.message)}</p>
+      </body>`;
+  }
 }
-function back(){try{frame.contentWindow.history.back()}catch(e){}}
-function forward(){try{frame.contentWindow.history.forward()}catch(e){}}
-function reload(){try{frame.contentWindow.location.reload()}catch(e){}}
+
+function escapeHTML(text) {
+  return String(text).replace(/[&<>"']/g, char => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  })[char]);
+}
+
+function back() {
+  history.back();
+}
+
+function forward() {
+  history.forward();
+}
+
+function reload() {
+  go();
+}
 </script>
 </body>
 </html>
